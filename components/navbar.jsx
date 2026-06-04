@@ -2,7 +2,9 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar__logo">
-        OVI<span>·</span>MATH
+        <a href="/">
+         OVI<span>·</span>MATH
+        </a>
       </div>
       <ul className="navbar__links">
         <li><a href="/books">Books</a></li>
