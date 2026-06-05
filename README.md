@@ -20,13 +20,19 @@ Math Portal is a lightweight web application for learning and practicing mathema
 
 	npm install
 
-3. Run the development server:
+3. Start PostgreSQL locally with Docker Compose (optional for future backend features):
+
+	docker compose up -d
+
+4. Copy `.env.example` to `.env` and update the values if needed.
+
+5. Run the development server:
 
 	npm run dev
 
 ## Usage
 
-- Open http://localhost:3000 in your browser
+- Open http://localhost:5173 in your browser
 - Create an account or use the demo mode to start practicing
 
 ## Contribution

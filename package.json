@@ -6,15 +6,23 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node server/index.js",
+    "migrate:dev": "prisma migrate dev --name init",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
+    "@prisma/client": "^5.18.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.17.0"
   },
   "devDependencies": {
+    "@prisma/client": "^5.18.0",
     "@vitejs/plugin-react": "^6.0.2",
+    "prisma": "^5.18.0",
     "vite": "^8.0.12"
   }
 }
