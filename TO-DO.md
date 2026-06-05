@@ -1,17 +1,13 @@
 # Project TODO — Math Portal
 
-
-1. Create feature branch and backup current state
-   - Create a git branch (e.g., `feature/platform`) and push it.
-
-2. Add PostgreSQL (local Docker) and environment configuration
-   - Add a `docker-compose.yml` or use a local Postgres install and `.env` entries.
-
-3. Add an ORM and migrations (Prisma recommended)
-   - Install Prisma or another ORM; configure the DB connection and generate migrations.
-
-4. Implement authentication (signup/login) and user roles
-   - Use JWT or session cookies; create roles: `user`, `author`, `admin`.
+- [x] Create feature branch and backup current state
+  - Created and pushed `feature-platform`.
+- [x] Add PostgreSQL (local Docker) and environment configuration
+  - Added `docker-compose.yml`, `.env.example`, and local `.env`.
+- [x] Add an ORM and migrations (Prisma recommended)
+  - Added Prisma schema, backend server, and generated Prisma client.
+- [x] Implement authentication (signup/login) and user roles
+  - Added signup/login endpoints, JWT auth, and password hashing.
 
 5. Navbar: add user icon, login/logout, and profile link
    - Show logged-in state and quick access to profile/settings.
