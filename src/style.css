@@ -146,6 +146,22 @@ a { text-decoration: none; color: inherit; }
   color: #fff;
 }
 
+.hero__intro {
+  color: #ddd;
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+}
+.hero__cta {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
 /* ── LAYOUT ── */
 .container {
   max-width: 960px;
@@ -222,6 +238,14 @@ a { text-decoration: none; color: inherit; }
   background: #f0ece3;
   color: var(--muted);
   border-radius: 2px;
+}
+
+.book-card__cover {
+  width: 100%;
+  height: 120px;
+  border-radius: 2px;
+  margin-bottom: 0.75rem;
+  background-size: cover;
 }
 
 /* ── PROBLEM OF THE WEEK ── */
@@ -377,3 +401,36 @@ a { text-decoration: none; color: inherit; }
   transition: color 0.15s;
 }
 .footer__links a:hover { color: #aaa; }
+
+/* ── NAVBAR RESPONSIVE / ACCESSIBILITY ── */
+.navbar__toggle {
+  display: none;
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+@media (max-width: 700px) {
+  .navbar__toggle { display: block; }
+  .navbar__links { display: none; }
+  .navbar__links--open {
+    display: flex !important;
+    flex-direction: column;
+    position: absolute;
+    top: 56px;
+    right: 0;
+    background: var(--ink);
+    padding: 0.75rem 1rem;
+    border-left: none;
+    min-width: 160px;
+  }
+  .navbar__links a { border-left: none; padding: 0.6rem 0.75rem; }
+}

@@ -10,11 +10,10 @@ export default function Hero() {
       <div className="hero__grid-bg" aria-hidden="true" />
       <div className="hero__content">
         <div className="hero__tag">// mathematics portal</div>
-        <h1 className="hero__title">
-          OVI Math<br />
-          <em>Portal.</em>
-        </h1>
+        <h1 className="hero__title">OVI Math Portal</h1>
+        <p className="hero__intro">A community-curated hub for learning and discussing mathematics.</p>
         <p className="hero__sub">Learn &nbsp;·&nbsp; Explore &nbsp;·&nbsp; Discuss</p>
+        <a href="/books" className="hero__cta">Explore library →</a>
         <div className="hero__pills">
           {TOPICS.map((t) => (
             <button

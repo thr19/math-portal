@@ -57,6 +57,7 @@ export default function Home() {
           {BOOKS.map((book) => (
             <div className="book-card" key={book.title}>
               <div className="book-card__spine" style={{ background: book.color }} />
+              <div className="book-card__cover" style={{ background: `${book.color}33` }} aria-hidden="true" />
               <div className="book-card__title">{book.title}</div>
               <div className="book-card__author">{book.author}</div>
               <span className="book-card__tag">{book.tag}</span>
