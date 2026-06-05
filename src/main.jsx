@@ -12,14 +12,16 @@ import Forum from '../pages/forum.jsx'
 import About from '../pages/about.jsx'
 import Contribute from '../pages/contribute.jsx'
 import Contact from '../pages/contact.jsx'
+import Login from '../pages/login.jsx'
 import Footer from '../components/footer.jsx'
+import { AuthProvider } from './AuthContext.jsx'
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Hero />
+    <AuthProvider>
       <BrowserRouter>
+        <Navbar />
+        <Hero />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
@@ -29,11 +31,12 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contribute" element={<Contribute />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<Home />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
-      <Footer />
-    </>
+    </AuthProvider>
   )
 }
 

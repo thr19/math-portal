@@ -77,6 +77,42 @@ a { text-decoration: none; color: inherit; }
   color: #fff;
   background: #1a1a1a;
 }
+.navbar__user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1.1rem;
+  color: #fff;
+  font-size: 11px;
+  text-transform: none;
+}
+.navbar__user-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.navbar__logout {
+  background: transparent;
+  border: 1px solid #999;
+  color: #999;
+  border-radius: 3px;
+  padding: 0.35rem 0.75rem;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.navbar__logout:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #fff;
+  color: #fff;
+}
 
 /* ── HERO ── */
 .hero {
@@ -433,4 +469,70 @@ a { text-decoration: none; color: inherit; }
     min-width: 160px;
   }
   .navbar__links a { border-left: none; padding: 0.6rem 0.75rem; }
+}
+
+.auth-page {
+  min-height: calc(100vh - 160px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: #f2efe7;
+}
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.06);
+}
+.auth-card h1 {
+  margin-bottom: 0.5rem;
+  font-family: var(--serif);
+  font-size: 2rem;
+}
+.auth-note {
+  margin-bottom: 1.75rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.auth-form {
+  display: grid;
+  gap: 1rem;
+}
+.auth-form label {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.auth-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #f8f5ef;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+}
+.auth-button {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.auth-button:hover {
+  opacity: 0.92;
+}
+.auth-error {
+  margin-top: 0.75rem;
+  color: #a52a2a;
+  font-size: 0.95rem;
 }

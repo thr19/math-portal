@@ -9,8 +9,8 @@
 - [x] Implement authentication (signup/login) and user roles
   - Added signup/login endpoints, JWT auth, and password hashing.
 
-5. Navbar: add user icon, login/logout, and profile link
-   - Show logged-in state and quick access to profile/settings.
+- [x] Navbar: add user icon, login/logout, and profile link
+  - Show logged-in state and quick access to profile/settings.
 
 6. Add Markdown support (rendering with `react-markdown`)
    - Install `react-markdown` and safe HTML handling (`rehype-sanitize`).
