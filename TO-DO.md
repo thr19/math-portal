@@ -8,18 +8,21 @@
   - Added Prisma schema, backend server, and generated Prisma client.
 - [x] Implement authentication (signup/login) and user roles
   - Added signup/login endpoints, JWT auth, and password hashing.
+  - Added frontend signup page and linked it from login/navigation.
 
 - [x] Navbar: add user icon, login/logout, and profile link
   - Show logged-in state and quick access to profile/settings.
 
-6. Add Markdown support (rendering with `react-markdown`)
-   - Install `react-markdown` and safe HTML handling (`rehype-sanitize`).
+6. [x] Add Markdown support (rendering with `react-markdown`)
+  - Install `react-markdown` and safe HTML handling (`rehype-sanitize`).
+  - Add reusable `MarkdownRenderer` component and sample blog content.
 
-7. Provide a simple Markdown editor for posts/pages
-   - Start with a textarea + preview; later consider a richer editor (ToastUI/Editor.js).
+7. [x] Provide a simple Markdown editor for posts/pages
+  - Added a live Markdown editor with toolbar, preview, and publish flow.
 
 8. Build Blog: posts CRUD, categories, and tags
    - API endpoints, frontend forms, and list/post pages. Support categories & tags.
+   - [x] Add blog post creation API and frontend publish editor integration.
 
 9. Build Wiki: pages CRUD, versioning, and search
    - Wiki pages editable via Markdown; keep versions/revisions for rollback.

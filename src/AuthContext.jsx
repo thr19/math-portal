@@ -44,23 +44,54 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     setError(null)
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
 
-    if (!res.ok) {
       const body = await res.json().catch(() => ({}))
-      setError(body.error || 'Login failed')
+      if (!res.ok) {
+        setError(body.error || body.message || 'Login failed. Please check your credentials or try again.')
+        return { success: false }
+      }
+
+      const { token: authToken, user: userData } = body
+      localStorage.setItem(STORAGE_KEY, authToken)
+      setToken(authToken)
+      setUser(userData)
+      return { success: true }
+    } catch (err) {
+      setError(err.message || 'Network error. Unable to reach authentication server.')
       return { success: false }
     }
+  }
 
-    const { token: authToken, user: userData } = await res.json()
-    localStorage.setItem(STORAGE_KEY, authToken)
-    setToken(authToken)
-    setUser(userData)
-    return { success: true }
+  const signup = async ({ name, email, password }) => {
+    setError(null)
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      })
+
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setError(body.error || body.message || 'Signup failed. Please try again.')
+        return { success: false }
+      }
+
+      const { token: authToken, user: userData } = body
+      localStorage.setItem(STORAGE_KEY, authToken)
+      setToken(authToken)
+      setUser(userData)
+      return { success: true }
+    } catch (err) {
+      setError(err.message || 'Network error. Unable to reach authentication server.')
+      return { success: false }
+    }
   }
 
   const logout = () => {
@@ -71,8 +102,8 @@ export function AuthProvider({ children }) {
   }
 
   const value = useMemo(
-    () => ({ user, loading, error, login, logout }),
-    [user, loading, error]
+    () => ({ user, loading, error, login, logout, signup, token }),
+    [user, loading, error, token]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

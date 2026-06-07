@@ -13,6 +13,8 @@ import About from '../pages/about.jsx'
 import Contribute from '../pages/contribute.jsx'
 import Contact from '../pages/contact.jsx'
 import Login from '../pages/login.jsx'
+import Signup from '../pages/signup.jsx'
+import Profile from '../pages/profile.jsx'
 import Footer from '../components/footer.jsx'
 import { AuthProvider } from './AuthContext.jsx'
 
@@ -32,6 +34,8 @@ function App() {
           <Route path="/contribute" element={<Contribute />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Home />} />
         </Routes>
         <Footer />

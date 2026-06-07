@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../src/AuthContext.jsx'
 
-export default function Login() {
-  const { user, login, loading, error } = useAuth()
+export default function Signup() {
+  const { user, signup, loading, error } = useAuth()
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [status, setStatus] = useState('')
+  const navigate = useNavigate()
 
   if (user) {
     return <Navigate to="/" replace />
@@ -16,22 +18,31 @@ export default function Login() {
     event.preventDefault()
     setStatus('')
 
-    const result = await login(email, password)
+    const result = await signup({ name, email, password })
     if (!result.success) {
-      setStatus(error || 'Login failed. Check your credentials.')
+      setStatus(error || 'Signup failed. Please try again.')
       return
     }
 
-    setStatus('Logged in successfully. Redirecting…')
+    setStatus('Signup successful. Redirecting…')
     navigate('/profile')
   }
 
   return (
     <main className="auth-page">
       <div className="auth-card">
-        <h1>Login</h1>
-        <p className="auth-note">Use your account to access moderation and posting tools.</p>
+        <h1>Sign up</h1>
+        <p className="auth-note">Create a new account to post, comment, and contribute.</p>
         <form onSubmit={handleSubmit} className="auth-form">
+          <label>
+            Name
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="auth-input"
+            />
+          </label>
           <label>
             Email
             <input
@@ -53,11 +64,11 @@ export default function Login() {
             />
           </label>
           <button type="submit" className="auth-button" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign in'}
+            {loading ? 'Creating account…' : 'Sign up'}
           </button>
           {status && <p className="auth-error">{status}</p>}
           <p className="auth-note">
-            Don’t have an account? <Link to="/signup">Sign up</Link>.
+            Already have an account? <Link to="/login">Log in</Link>.
           </p>
         </form>
       </div>

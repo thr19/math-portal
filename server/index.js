@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
@@ -112,9 +113,38 @@ app.get('/api/auth/me', authMiddleware, async (req, res) => {
   res.json({ user: req.user })
 })
 
-app.get('/api/users', authMiddleware, async (req, res) => {
+app.get('/api/auth/roles', (req, res) => {
+  res.json({ roles: ['USER', 'AUTHOR', 'MODERATOR', 'ADMIN'] })
+})
+
+app.put('/api/users/:id/role', authMiddleware, async (req, res) => {
   if (req.user.role !== 'ADMIN') {
     return res.status(403).json({ error: 'Admin access required' })
+  }
+
+  const userId = Number(req.params.id)
+  const { role } = req.body
+  if (!['USER', 'AUTHOR', 'MODERATOR', 'ADMIN'].includes(role)) {
+    return res.status(400).json({ error: 'Invalid role' })
+  }
+
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data: { role },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      role: true,
+      createdAt: true,
+    },
+  })
+  res.json(user)
+})
+
+app.get('/api/users', authMiddleware, async (req, res) => {
+  if (req.user.role !== 'ADMIN' && req.user.role !== 'MODERATOR') {
+    return res.status(403).json({ error: 'Admin or moderator access required' })
   }
 
   const users = await prisma.user.findMany({
@@ -130,7 +160,82 @@ app.get('/api/users', authMiddleware, async (req, res) => {
   res.json(users)
 })
 
-const port = process.env.PORT || 4000
-app.listen(port, () => {
-  console.log(`API server running on http://localhost:${port}`)
+function slugify(text) {
+  return text
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+app.get('/api/blog/posts', async (req, res) => {
+  const posts = await prisma.post.findMany({
+    where: { published: true },
+    orderBy: { createdAt: 'desc' },
+    include: {
+      author: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  })
+  res.json(posts)
 })
+
+app.post('/api/blog/posts', authMiddleware, async (req, res) => {
+  if (!['AUTHOR', 'MODERATOR', 'ADMIN'].includes(req.user.role)) {
+    return res.status(403).json({ error: 'Author access required' })
+  }
+
+  const { title, content, published = true } = req.body
+  if (!title?.trim() || !content?.trim()) {
+    return res.status(400).json({ error: 'Title and content are required' })
+  }
+
+  let slug = slugify(title)
+  if (!slug) {
+    slug = `post-${Date.now()}`
+  }
+
+  const existing = await prisma.post.findUnique({ where: { slug } })
+  if (existing) {
+    slug = `${slug}-${Date.now()}`
+  }
+
+  const post = await prisma.post.create({
+    data: {
+      title,
+      slug,
+      content,
+      published,
+      authorId: req.user.id,
+    },
+  })
+
+  res.status(201).json(post)
+})
+
+app.use((err, req, res, next) => {
+  console.error('Server error:', err)
+  res.status(500).json({ error: err.message || 'Internal server error' })
+})
+
+const port = process.env.PORT || 4000
+const databaseUrl = process.env.DATABASE_URL
+if (!databaseUrl) {
+  console.error('Missing DATABASE_URL. Copy .env.example to .env and set the database connection string.')
+  process.exit(1)
+}
+
+prisma.$connect()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`API server running on http://localhost:${port}`)
+    })
+  })
+  .catch((error) => {
+    console.error('Unable to connect to the database:', error.message)
+    process.exit(1)
+  })
